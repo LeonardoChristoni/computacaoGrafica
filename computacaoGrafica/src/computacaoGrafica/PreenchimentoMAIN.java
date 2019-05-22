@@ -10,7 +10,7 @@ public class PreenchimentoMAIN {
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 		Mat src = null, dst = null;
 		// ALTERAR DIRETORIO DA IMAGEM DE ENTRADA	
-		String caminhoImagem="C:\\Users\\1531454\\git\\computacaoGrafica\\computacaoGrafica\\src\\assets\\preenchimento5x5.png";
+		String caminhoImagem="C:\\Users\\1531454\\git\\computacaoGrafica\\computacaoGrafica\\src\\assets\\rgb.jpg";
 		
 		src = Imgcodecs.imread(caminhoImagem);
 		
@@ -19,7 +19,7 @@ public class PreenchimentoMAIN {
 		Preenchimento.preenchimento4vizinhos(dst, new Pixel(src.get(src.rows()/2, src.cols()/2), src.rows()/2, src.cols()/2));
 		
 		// ALTERAR DIRETORIO DA IMAGEM DE SAIDA	
-		Imgcodecs.imwrite("C:\\Users\\1531454\\git\\computacaoGrafica\\computacaoGrafica\\src\\assets\\preenchimento5x5Centro.png", dst);
+		Imgcodecs.imwrite("C:\\Users\\1531454\\git\\computacaoGrafica\\computacaoGrafica\\src\\assets\\preenchimentoCentro.jpg", dst);
 		System.out.println("Preenchimento por Centro - Processado!");
 	}
 

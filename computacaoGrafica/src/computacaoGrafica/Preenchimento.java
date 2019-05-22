@@ -14,55 +14,50 @@ public class Preenchimento {
 		int x = pixel.getX();
 		int y = pixel.getY();
 		
-		double[] cima = dst.get(x-1,y);
-		double[] esq = dst.get(x,y-1);
-		double[] dir = dst.get(x,y+1);
-		double[] baixo = dst.get(x+1,y);
+		Pixel cima = new Pixel(dst.get(x-1,y),x-1,y);
+		Pixel esq = new Pixel(dst.get(x,y-1),x,y-1);
+		Pixel dir = new Pixel(dst.get(x,y+1),x,y+1);
+		Pixel baixo = new Pixel(dst.get(x+1,y),x+1,y);
 		
-		List<double[]> listaVizinhos = new ArrayList<double[]>(
-				Arrays.asList(cima,esq,dir,baixo));
+		List<Pixel> listaVizinhos = new ArrayList<Pixel>(Arrays.asList(cima,esq,dir,baixo));
 		
-		//se for pixel de borda , ignoro
-		if(x-1 == 0 || y-1 == 0 || x+1 == dst.rows() || y+1 == dst.cols()) {
-			return;
-		}
+		double[] pxCor = {255,0,255};
+		
+		//aplico cor de preenchimento
+		dst.put(x,y, pxCor);
 		
 		for(int i=0;i<4;i++) {
+			
+			//se for pixel de borda , ignoro
+			if(listaVizinhos.get(i).getX()<0 || listaVizinhos.get(i).getY()<0 || 
+					listaVizinhos.get(i).getX()>dst.rows()-1 || listaVizinhos.get(i).getY()>dst.cols()-1) {
+				continue;
+			}
+
 			//se for a mesma cor
-			if(listaVizinhos.get(i)[0] == pixel.getPixel()[0] && listaVizinhos.get(i)[1]==pixel.getPixel()[1] 
-					&& listaVizinhos.get(i)[2]==pixel.getPixel()[2]) {
-				
-				double[] pxCor = {255,0,255};
-				
-				//aplico cor de preenchimento
-				dst.put(x,y, pxCor);
-				
-				Pixel px = null;
+			if(listaVizinhos.get(i).getPixel()[0] == pixel.getPixel()[0] && 
+			   listaVizinhos.get(i).getPixel()[1]==pixel.getPixel()[1] && 
+			   listaVizinhos.get(i).getPixel()[2]==pixel.getPixel()[2]) {
 				
 				switch(i) {
 					case 0:
-						px = new Pixel(pixel.getPixel(),x-1,y);
-//						pixel.setX(x-1);
-//						pixel.setY(y);
+						pixel.setX(x-1);
+						pixel.setY(y);
 						break;
 					case 1:
-						px = new Pixel(pixel.getPixel(),x,y-1);
-//						pixel.setX(x);
-//						pixel.setY(y-1);
+						pixel.setX(x);
+						pixel.setY(y-1);
 						break;
 					case 2:
-						px = new Pixel(pixel.getPixel(),x,y+1);
-//						pixel.setX(x);
-//						pixel.setY(y+1);
+						pixel.setX(x);
+						pixel.setY(y+1);
 						break;
 					case 3:
-						px = new Pixel(pixel.getPixel(),x+1,y);
-//						pixel.setX(x+1);
-//						pixel.setY(y);
+						pixel.setX(x+1);
+						pixel.setY(y);
 						break;
 				}
-				
-				preenchimento4vizinhos(dst,px);
+				preenchimento4vizinhos(dst,pixel);
 			}
 		}
 	}
