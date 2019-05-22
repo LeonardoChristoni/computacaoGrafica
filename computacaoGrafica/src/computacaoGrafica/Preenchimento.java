@@ -10,7 +10,7 @@ public class Preenchimento {
 	
 	private Preenchimento() {};
 	
-	public static void preenchimento4vizinhos(Mat dst,Pixel pixel) {
+	public static void preenchimento4vizinhos(Mat dst,Pixel pixel,double[] corNova) {
 		int x = pixel.getX();
 		int y = pixel.getY();
 		
@@ -21,10 +21,8 @@ public class Preenchimento {
 		
 		List<Pixel> listaVizinhos = new ArrayList<Pixel>(Arrays.asList(cima,esq,dir,baixo));
 		
-		double[] pxCor = {255,0,255};
-		
 		//aplico cor de preenchimento
-		dst.put(x,y, pxCor);
+		dst.put(x,y, corNova);
 		
 		for(int i=0;i<4;i++) {
 			
@@ -57,8 +55,20 @@ public class Preenchimento {
 						pixel.setY(y);
 						break;
 				}
-				preenchimento4vizinhos(dst,pixel);
+				preenchimento4vizinhos(dst,pixel,corNova);
 			}
 		}
+	}
+	
+	public static void preenchimentoPorCor(Mat dst,double[] cor,double[] corNova) {
+		
+		for(int i=0;i<dst.rows();i++) {
+			for(int j=0;j<dst.cols();j++) {
+				if(dst.get(i, j)[0] == cor[0] && dst.get(i,j)[1]==cor[1] && dst.get(i,j)[2]==cor[2]) {
+					dst.put(i, j,corNova);
+				}
+			}
+		}
+		
 	}
 }
