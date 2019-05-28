@@ -1,4 +1,4 @@
-package Utils;
+package utils;
 
 public class TailCalls {
     public static <T> TailCall<T> call(final TailCall<T> nextcall) {
