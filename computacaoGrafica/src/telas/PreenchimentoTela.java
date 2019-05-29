@@ -25,9 +25,9 @@ public class PreenchimentoTela {
 		JFrame preenchimento = new JFrame();
 		JLabel lblImage = new JLabel();
 		
-		String imagemParcial="C:\\Users\\1531454\\git\\computacaoGrafica\\computacaoGrafica\\src\\assets\\imagemParcial.jpg";
-		Mat imagem = Imgcodecs.imread("C:\\Users\\1531454\\git\\computacaoGrafica\\computacaoGrafica\\src\\assets\\teste.jpg");
-		BufferedImage img = ImageIO.read(new File("C:\\Users\\1531454\\git\\computacaoGrafica\\computacaoGrafica\\src\\assets\\teste.jpg"));
+		String imagemParcial="C:\\Users\\nao-t\\git\\computacaoGrafica\\computacaoGrafica\\src\\assets\\imagemParcial.jpg";
+		Mat imagem = Imgcodecs.imread("C:\\Users\\nao-t\\git\\computacaoGrafica\\computacaoGrafica\\src\\assets\\rgb.jpg");
+		BufferedImage img = ImageIO.read(new File("C:\\Users\\nao-t\\git\\computacaoGrafica\\computacaoGrafica\\src\\assets\\rgb.jpg"));
 		lblImage.setSize(img.getWidth(null),img.getHeight(null));
 		
 		Mat resizeImage = imagem.clone();
