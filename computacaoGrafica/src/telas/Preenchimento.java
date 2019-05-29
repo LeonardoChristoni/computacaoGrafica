@@ -57,35 +57,37 @@ public class Preenchimento extends JFrame {
 		lblImage.setPreferredSize(new Dimension(800,600));
 		lblImage.setVisible(true);
 		Mat imagem = new Mat();
-		carregarImagem(lblImage,imagem,"C:\\Users\\1531454\\git\\computacaoGrafica\\computacaoGrafica\\src\\assets\\goku.jpg");
-		
+		String imagemParcial="C:\\Users\\1531454\\git\\computacaoGrafica\\computacaoGrafica\\src\\assets\\imagemParcial.jpg";
+		carregarImagem(lblImage,imagem,"C:\\Users\\1531454\\git\\computacaoGrafica\\computacaoGrafica\\src\\assets\\teste.jpg",imagemParcial);
+
 		lblImage.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				Mat imagemRefresh = Imgcodecs.imread(imagemParcial);
+				
 				int x,y;
-				x=e.getX();
-				y=e.getY();
+				x = e.getX();
+				y = e.getY();
 				
-				Mat imagemRefresh = (Mat) lblImage.getIcon();
-				
-				computacaoGrafica.Preenchimento.preenchimento4vizinhos(imagemRefresh, new Pixel(imagem.get(x, y), x, y), new double[] {255,255,0});
-				Imgcodecs.imwrite("C:\\\\Users\\\\1531454\\\\git\\\\computacaoGrafica\\\\computacaoGrafica\\\\src\\\\assets\\\\gokuREDI.jpg",imagemRefresh);
-				lblImage.setIcon(new ImageIcon("C:\\Users\\1531454\\git\\computacaoGrafica\\computacaoGrafica\\src\\assets\\gokuREDI.jpg"));
+				computacaoGrafica.Preenchimento.preenchimento4vizinhos(imagemRefresh, new Pixel(imagemRefresh.get(x, y), x, y), new double[] {255,255,0});
+				Imgcodecs.imwrite(imagemParcial,imagemRefresh);
+				lblImage.setIcon(new ImageIcon(imagemParcial));
 			}
 		});
 		getContentPane().add(lblImage, BorderLayout.CENTER);
 	}
 	
 	//carrega imagem e redimensiona conforme Jframe
-	private void carregarImagem(JLabel lblImage,Mat imagem,String caminhoImagem) {
+	private void carregarImagem(JLabel lblImage,Mat imagem,String caminhoImagem,String imagemParcial) {
 		imagem = Imgcodecs.imread(caminhoImagem);
+		
 		lblImage.setHorizontalAlignment(SwingConstants.CENTER);
 		lblImage.setVerticalAlignment(SwingConstants.CENTER);
 			    
-	    BufferedImage img = mat2Img(imagem);
-	    
+//	    BufferedImage img = mat2Img(imagem);
+		Mat resizeImage = imagem.clone();
 	    if(imagem.width() > 800 || imagem.height()>600) {
-	    	Mat resizeImage = new Mat();
+	    	
 	    	double novaLargura = 800,novaAltura = 600;
 	    	if(imagem.width() > imagem.height()) {
 	    		novaAltura = imagem.height() * 800 / imagem.width();
@@ -94,12 +96,12 @@ public class Preenchimento extends JFrame {
 	    	}
 	 	    Size scaleSize = new Size(novaLargura,novaAltura);
 	 	    Imgproc.resize(imagem, resizeImage, scaleSize);
-	 	    Imgcodecs.imwrite("C:\\Users\\1531454\\git\\computacaoGrafica\\computacaoGrafica\\src\\assets\\gokuREDI.jpg", resizeImage);
 	 	    
-	 	    img = mat2Img(resizeImage);
+//	 	    img = mat2Img(resizeImage);
 	    }
-	    
-	    lblImage.setIcon(new ImageIcon("C:\\Users\\1531454\\git\\computacaoGrafica\\computacaoGrafica\\src\\assets\\gokuREDI.jpg"));
+
+ 	    Imgcodecs.imwrite(imagemParcial, resizeImage);
+	    lblImage.setIcon(new ImageIcon(imagemParcial));
 	}
 	
 	//Mat to BufferedImage
